@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "3Dtagere",
+                "projectName": "3Dtagere",
+                "workingDirectory": "c:\\Development\\3Dtagere",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "3Dtagere",
+                "projectName": "3Dtagere",
+                "workingDirectory": "c:\\Development\\3Dtagere",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
