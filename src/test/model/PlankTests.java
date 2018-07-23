@@ -2,22 +2,22 @@ package test.model;
 
 import model.Config;
 import model.Plank;
+import model.ShelfPoint;
+import test.TestClass;
 import java.awt.Point;
 import java.security.InvalidParameterException;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class PlankTests{
-    private final float DELTA = 0.0001f;
+public class PlankTests extends TestClass{
 
     //#region Getters    
     @Test
-    public void PlankTests_getWidthShouldReturnPlankWidth(){
+    public void Plank_getWidthShouldReturnPlankWidth(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
@@ -28,131 +28,133 @@ public class PlankTests{
     }
 
     @Test
-    public void PlankTests_getHeightShouldReturnPlankHeight(){
+    public void Plank_getHeight_Should_ReturnPlankHeight(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
         float result = testPlank.getHeight();
 
         //Assert
-        assertEquals(result, HEIGHT, DELTA);
+        assertEquals(HEIGHT, result, DELTA);
     }
 
     @Test
-    public void PlankTests_getOriginShouldReturnPlankOrigin(){
+    public void Plank_getOrigin_Should_ReturnPlankOrigin(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
-        Point resultOrigin = testPlank.getOrigin();
+        ShelfPoint resultOrigin = testPlank.getOrigin();
 
         //Assert
-        assertEquals(resultOrigin.x, ORIGIN.x);
-        assertEquals(resultOrigin.y, ORIGIN.y);
+        assertTrue(resultOrigin.equals(ORIGIN));
     }
     //#endregion
 
     //#region Setters
     @Test
-    public void PlankTests_setWidthShouldChangePlankWidthValue(){
+    public void Plank_setWidth_Should_ChangePlankWidthValue(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
         final float NEW_WIDTH = 15;
 
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
         testPlank.setWidth(NEW_WIDTH);
+        float result = testPlank.getWidth();
 
         //Assert
-        assertEquals(testPlank.getWidth(), NEW_WIDTH, DELTA);
+        assertEquals(NEW_WIDTH, result, DELTA);
     }
 
     @Test
-    public void PlankTests_setWidthShouldChangePlankWidthToMinimumValueIfGivenValueIsTooSmall(){
+    public void Plank_setWidth_Should_ChangePlankWidthToMinimumValue_If_GivenValueIsTooSmall(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
         final float SMALL_WIDTH = Config.MIN_PLANK_THICKNESS - 0.5f;
 
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
         testPlank.setWidth(SMALL_WIDTH);
+        float result = testPlank.getWidth();
 
         //Assert
-        assertEquals(testPlank.getWidth(), Config.MIN_PLANK_THICKNESS, DELTA);
+        assertEquals(Config.MIN_PLANK_THICKNESS, result, DELTA);
     }
     @Test
-    public void PlankTests_setHeightShouldChangePlankHeightValue(){
+    public void Plank_setHeight_Should_ChangePlankHeightValue(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
         final float NEW_HEIGHT = 15;
 
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
         testPlank.setHeight(NEW_HEIGHT);
+        float result = testPlank.getHeight();
 
         //Assert
-        assertEquals(testPlank.getHeight(), NEW_HEIGHT, DELTA);
+        assertEquals(NEW_HEIGHT, result, DELTA);
     }
 
     @Test
-    public void PlankTests_setHeightShouldChangePlankHeightToMinimumValueIfGivenValueIsTooSmall(){
+    public void Plank_setHeight_Should_ChangePlankHeightToMinimumValue_If_GivenValueIsTooSmall(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
         final float SMALL_HEIGHT = Config.MIN_PLANK_THICKNESS - 0.5f;
 
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
         testPlank.setHeight(SMALL_HEIGHT);
+        float result = testPlank.getHeight();
 
         //Assert
-        assertEquals(testPlank.getHeight(), Config.MIN_PLANK_THICKNESS, DELTA);
+        assertEquals(Config.MIN_PLANK_THICKNESS, result, DELTA);
     }
     //#endregion
 
     //#region Constructors
     @Test
-    public void PlankTests_PlankConstructorShouldInitialzePlankWithGivenParameters(){
+    public void Plank_Constructor_Should_SetDimentionsAndOrigin(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
 
         //Action
         Plank result = new Plank(WIDTH, HEIGHT, ORIGIN);
-        Point resultOrigin = result.getOrigin();
+        ShelfPoint resultOrigin = result.getOrigin();
 
         //Assert
-        assertEquals(result.getWidth(), WIDTH, DELTA);
-        assertEquals(result.getHeight(), HEIGHT, DELTA);
-        assertEquals(resultOrigin.x, ORIGIN.x);
-        assertEquals(resultOrigin.y, ORIGIN.y);
+        assertEquals(WIDTH, result.getWidth(), DELTA);
+        assertEquals(HEIGHT, result.getHeight(), DELTA);
+        assertTrue(resultOrigin.equals(ORIGIN));
     }
 
     @Test
-    public void PlankTests_PlankConstructorShouldThrowExceptionIfOriginIsNull(){
+    public void Plank_Constructor_Should_ThrowException_If_OriginIsNull(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final Point ORIGIN = null;
+        final ShelfPoint ORIGIN = null;
 
         boolean exceptionThrown = false;
 
@@ -169,18 +171,18 @@ public class PlankTests{
     }
 
     @Test
-    public void PlankTests_PlankConstructorShouldSetDimentionsToMinimumIfGivenDimentionsAreTooSmall(){
+    public void Plank_Constructor_Should_SetDimentionsToMinimum_If_GivenDimentionsAreTooSmall(){
         //Arrange
         final float WIDTH = Config.MIN_PLANK_THICKNESS - 0.001f;
         final float HEIGHT = Config.MIN_PLANK_THICKNESS - 1000f;
-        final Point ORIGIN = new Point(40,30);
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
 
         //Action
         Plank result = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Assert
-        assertEquals(result.getWidth(), Config.MIN_PLANK_THICKNESS, DELTA);
-        assertEquals(result.getHeight(), Config.MIN_PLANK_THICKNESS, DELTA);
+        assertEquals(Config.MIN_PLANK_THICKNESS, DELTA, result.getWidth());
+        assertEquals(Config.MIN_PLANK_THICKNESS, result.getHeight(), DELTA);
     }
     //#endregion
 }

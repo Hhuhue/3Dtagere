@@ -9,7 +9,7 @@ import java.security.InvalidParameterException;
 public class Plank{
     private float width;
     private float height;
-    private Point origin;
+    private ShelfPoint origin;
 
     /**
      * Intitializes a new instance of the Plank class.
@@ -18,7 +18,7 @@ public class Plank{
      * @param origin The point that determines the position of the plank
      * @throws InvalidParameterException Thrown if the given origin is null
      */
-    public Plank(float width, float height, Point origin){
+    public Plank(float width, float height, ShelfPoint origin){
         if(origin == null) throw new InvalidParameterException("Origin must not be null");        
         this.origin = origin;
         setWidth(width);
@@ -30,7 +30,7 @@ public class Plank{
      * @param width The new width
      */
     public void setWidth(float width){
-        if(width <= Config.MIN_PLANK_THICKNESS){
+        if(width < Config.MIN_PLANK_THICKNESS){
             this.width = Config.MIN_PLANK_THICKNESS;
         } else {
             this.width = width;
@@ -42,7 +42,7 @@ public class Plank{
      * @param height The new height
      */
     public void setHeight(float height){
-        if(height <= Config.MIN_PLANK_THICKNESS){
+        if(height < Config.MIN_PLANK_THICKNESS){
             this.height = Config.MIN_PLANK_THICKNESS;
         } else {
             this.height = height;
@@ -53,7 +53,7 @@ public class Plank{
      * Gives the position of the plank.
      * @return The position of the plank
      */
-    public Point getOrigin(){
+    public ShelfPoint getOrigin(){
         return this.origin;
     }
 

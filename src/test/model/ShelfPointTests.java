@@ -23,6 +23,21 @@ public class ShelfPointTests extends TestClass{
         assertEquals(X, result.x, DELTA);
         assertEquals(Y, result.y, DELTA);
     }
+    
+    @Test
+    public void ShelfPoint_CopyConstructor_Should_SetXAndYValuesFromGivePoint(){
+        //Arrange
+        final float X = 30.0f;
+        final float Y = 20.0f;
+        ShelfPoint pointToCopy = new ShelfPoint(X, Y);
+
+        //Action
+        ShelfPoint result = new ShelfPoint(pointToCopy);
+
+        //Assert
+        assertEquals(X, result.x, DELTA);
+        assertEquals(Y, result.y, DELTA);
+    }
     //#endregion
 
     //#region Add

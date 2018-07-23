@@ -20,6 +20,15 @@ public class ShelfPoint{
     }
 
     /**
+     * Creates a copy of the given ShelfPoint.
+     * @param p The point to copy
+     */
+    public ShelfPoint(ShelfPoint p){
+        this.x = p.x;
+        this.y = p.y;
+    }
+
+    /**
      * Adds the coordinates of from an other point.
      * @param p The coordinates to add
      * @throws InvalidParameterException Thrown when the point to add is null
