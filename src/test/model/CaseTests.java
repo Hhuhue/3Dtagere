@@ -68,12 +68,9 @@ public class CaseTests extends TestClass{
         final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
 
         ShelfPoint expectedTopOrigin = new ShelfPoint(ORIGIN);
-        ShelfPoint expectedLeftOrigin = new ShelfPoint(ORIGIN);;
-        ShelfPoint expectedRightOrigin = new ShelfPoint(ORIGIN);;
-        ShelfPoint expectedBottomOrigin = new ShelfPoint(ORIGIN);;
-        expectedLeftOrigin.add(new ShelfPoint(0, Config.PLANK_THICKNESS));
-        expectedRightOrigin.add(new ShelfPoint(WIDTH - Config.PLANK_THICKNESS, Config.PLANK_THICKNESS));
-        expectedBottomOrigin.add(new ShelfPoint(Config.PLANK_THICKNESS, HEIGHT - Config.PLANK_THICKNESS));
+        ShelfPoint expectedLeftOrigin = ShelfPoint.sum(ORIGIN, 0, Config.PLANK_THICKNESS);
+        ShelfPoint expectedRightOrigin = ShelfPoint.sum(ORIGIN,WIDTH - Config.PLANK_THICKNESS, Config.PLANK_THICKNESS);
+        ShelfPoint expectedBottomOrigin = ShelfPoint.sum(ORIGIN, Config.PLANK_THICKNESS, HEIGHT - Config.PLANK_THICKNESS);
 
         Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
         
@@ -116,12 +113,9 @@ public class CaseTests extends TestClass{
         final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
 
         ShelfPoint expectedTopOrigin = new ShelfPoint(ORIGIN);
-        ShelfPoint expectedLeftOrigin = new ShelfPoint(ORIGIN);
-        ShelfPoint expectedRightOrigin = new ShelfPoint(ORIGIN);
-        ShelfPoint expectedBottomOrigin = new ShelfPoint(ORIGIN);
-        expectedLeftOrigin.add(new ShelfPoint(0, Config.PLANK_THICKNESS));
-        expectedRightOrigin.add(new ShelfPoint(WIDTH - Config.PLANK_THICKNESS, Config.PLANK_THICKNESS));
-        expectedBottomOrigin.add(new ShelfPoint(Config.PLANK_THICKNESS, HEIGHT - Config.PLANK_THICKNESS));
+        ShelfPoint expectedLeftOrigin = ShelfPoint.sum(ORIGIN, 0, Config.PLANK_THICKNESS);
+        ShelfPoint expectedRightOrigin = ShelfPoint.sum(ORIGIN,WIDTH - Config.PLANK_THICKNESS, Config.PLANK_THICKNESS);
+        ShelfPoint expectedBottomOrigin = ShelfPoint.sum(ORIGIN, Config.PLANK_THICKNESS, HEIGHT - Config.PLANK_THICKNESS);
         
         //Action
         Case result = new Case(WIDTH, HEIGHT, ORIGIN);

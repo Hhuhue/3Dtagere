@@ -40,9 +40,9 @@ public class ShelfPointTests extends TestClass{
     }
     //#endregion
 
-    //#region Add
+    //#region Addition
     @Test
-    public void ShelfPoint_add_Should_ThrowException_If_AddedPointIsNull(){
+    public void ShelfPoint_add_withPoint_Should_ThrowException_If_AddedPointIsNull(){
         //Arrange
         final float X = 30.0f;
         final float Y = 20.0f;
@@ -61,7 +61,7 @@ public class ShelfPointTests extends TestClass{
     }
 
     @Test
-    public void ShelfPoint_add_Should_SumPointCoordinates(){
+    public void ShelfPoint_add_withPoint_Should_SumPointCoordinates(){
         //Arrange
         final float EXPECTED_X = 1;
         final float EXPECTED_Y = 8.1f;
@@ -75,6 +75,112 @@ public class ShelfPointTests extends TestClass{
         //Assert
         assertEquals(EXPECTED_X, testPoint.x, DELTA);
         assertEquals(EXPECTED_Y, testPoint.y, DELTA);
+    }
+
+    @Test
+    public void ShelfPoint_add_withCoordinates_Should_SumPointCoordinates(){
+        //Arrange
+        final float EXPECTED_X = 1;
+        final float EXPECTED_Y = 8.1f;
+        final float ADDED_X = -2.1f;
+        final float ADDED_Y =  2.8f;
+
+        ShelfPoint testPoint = new ShelfPoint(3.1f, 5.3f);
+
+        //Action
+        testPoint.add(ADDED_X, ADDED_Y);
+
+        //Assert
+        assertEquals(EXPECTED_X, testPoint.x, DELTA);
+        assertEquals(EXPECTED_Y, testPoint.y, DELTA);
+    }
+    
+    @Test
+    public void ShelfPoint_sum_withPoints_Should_ThrowException_If_AddedPointsAreNull(){
+        //Arrange
+        final float X = 30.0f;
+        final float Y = 20.0f;
+        boolean exceptionThrownWithP1Null = false;
+        boolean exceptionThrownWithP2Null = false;
+        boolean exceptionThrownBothPointsNull = false;
+        ShelfPoint testPoint = new ShelfPoint(X, Y);
+
+        //Action
+        try{
+            ShelfPoint.sum(null, testPoint);
+        } catch (InvalidParameterException e){
+            exceptionThrownWithP1Null = true;
+        } 
+
+        try{
+            ShelfPoint.sum(testPoint, null);
+        } catch (InvalidParameterException e){
+            exceptionThrownWithP2Null = true;
+        } 
+
+        try{
+            ShelfPoint.sum(null, null);
+        } catch (InvalidParameterException e){
+            exceptionThrownBothPointsNull = true;
+        } 
+
+        //Assert
+        assertTrue(exceptionThrownWithP1Null);
+        assertTrue(exceptionThrownWithP2Null);
+        assertTrue(exceptionThrownBothPointsNull);
+    }
+
+    @Test
+    public void ShelfPoint_sum_withPoints_Should_SumPointsCoordinates(){
+        //Arrange
+        final float EXPECTED_X = 1;
+        final float EXPECTED_Y = 8.1f;
+
+        ShelfPoint testPoint1 = new ShelfPoint(3.1f, 5.3f);
+        ShelfPoint testPoint2 = new ShelfPoint(-2.1f, 2.8f);
+
+        //Action
+        ShelfPoint result = ShelfPoint.sum(testPoint1, testPoint2);
+
+        //Assert
+        assertEquals(EXPECTED_X, result.x, DELTA);
+        assertEquals(EXPECTED_Y, result.y, DELTA);
+    }
+
+    @Test
+    public void ShelfPoint_sum_withPointAndCoordinates_Should_ThrowException_If_AddedPointsAreNull(){
+        //Arrange
+        final float X = -2.1f;
+        final float Y = 2.8f;
+        boolean exceptionThrown = false;
+
+        //Action
+        try{
+            ShelfPoint.sum(null, X, Y);
+        } catch (InvalidParameterException e){
+            exceptionThrown = true;
+        } 
+
+        //Assert
+    assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void ShelfPoint_sum_withPointAndCoordinates_Should_SumPointAndCoordinates(){
+        //Arrange
+        final float EXPECTED_X = 1;
+        final float EXPECTED_Y = 8.1f;
+        final float X = -2.1f;
+        final float Y = 2.8f;
+
+        ShelfPoint testPoint = new ShelfPoint(3.1f, 5.3f);
+
+        //Action
+        ShelfPoint result = ShelfPoint.sum(testPoint, X, Y);
+
+        //Assert
+        assertEquals(EXPECTED_X, result.x, DELTA);
+        assertEquals(EXPECTED_Y, result.y, DELTA);
     }
     //#endregion
 

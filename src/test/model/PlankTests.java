@@ -4,7 +4,6 @@ import model.Config;
 import model.Plank;
 import model.ShelfPoint;
 import test.TestClass;
-import java.awt.Point;
 import java.security.InvalidParameterException;
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -29,7 +29,7 @@ public class ShelfPoint{
     }
 
     /**
-     * Adds the coordinates of from an other point.
+     * Adds the coordinates from an other point.
      * @param p The coordinates to add
      * @throws InvalidParameterException Thrown when the point to add is null
      */
@@ -38,6 +38,38 @@ public class ShelfPoint{
 
         this.x += p.x;
         this.y += p.y;
+    }
+
+    /**
+     * Adds the given coordinates.
+     * @param x The X coordinate
+     * @param y The Y coordinate
+     */
+    public void add(float x, float y){
+        this.x += x;
+        this.y += y;
+    }
+
+    /**
+     * Sums the coordinates from two points.
+     * @param p1 The first point to sum
+     * @throws InvalidParameterException Thrown when one or both points to sum are null
+     */
+    public static ShelfPoint sum(ShelfPoint p1, ShelfPoint p2){
+        if(p1 == null || p2 == null) throw new InvalidParameterException("The points to sum must not be null");
+
+        return new ShelfPoint(p1.x + p2.x, p1.y + p2.y);
+    }
+
+    /**
+     * Adds coordinates to the given point.
+     * @param x The X coordinate
+     * @param y The Y coordinate
+     */
+    public static ShelfPoint sum(ShelfPoint p, float x, float y){
+        if(p == null) throw new InvalidParameterException("The point to add must not be null");
+         
+        return new ShelfPoint(p.x + x,p.y +  y);
     }
 
     /**
