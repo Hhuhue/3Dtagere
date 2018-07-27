@@ -1,8 +1,13 @@
 package model;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 
+/**
+ * Class containing the dimentions, the position and the plank of a case
+ */
 public class Case{
+    
     public enum Side{
         TOP,
         LEFT,
@@ -15,7 +20,16 @@ public class Case{
     private float height;
     private ShelfPoint origin;
 
+    /**
+     * Initializes an instance of the Case class
+     * @param width The with of the case
+     * @param height The height of the case
+     * @param origin The position of th case
+     * @throws InvalidParameterException Thrown when the origin is null
+     */
     public Case(float width, float height, ShelfPoint origin){
+        if(origin == null) throw new InvalidParameterException("The case origin must not be null");
+
         this.width = width;
         this.height = height;
         this.origin = origin;
@@ -50,5 +64,23 @@ public class Case{
 
     public Plank getPlank(Side side){
         return this.sides.get(side);
+    }
+    
+    /**
+    * Sets the width of the Case and changes its plank accordingly.
+    *@param newWidth The new Case width
+    *@param direction The direction in which the Case will grow or shrink
+    */
+    public void setWidth(float newWidth, Side direction){	
+        
+    }
+    
+    /**
+    * Sets the height of the Case and changes its plank accordingly.
+    *@param newHeight The new Case height
+    *@param direction The direction in which the Case will grow or shrink
+    */
+    public void setHeight(float newHeight, Side direction){	
+        
     }
 }

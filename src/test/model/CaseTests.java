@@ -3,6 +3,8 @@ package test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.security.InvalidParameterException;
+
 import org.junit.Test;
 import model.Case;
 import model.Config;
@@ -90,6 +92,26 @@ public class CaseTests extends TestClass{
 
     //#region Constructors
     @Test
+    public void Case_Constructor_Should_ThrowException_If_GivenOriginIsNull(){
+        //Arrange
+        final float WIDTH = 20.0f;
+        final float HEIGHT = 30.0f;
+        final ShelfPoint ORIGIN = null;
+
+        boolean exceptionThrown = false;
+        
+        //Action
+        try{
+            new Case(WIDTH, HEIGHT, ORIGIN);
+        } catch (InvalidParameterException e){
+            exceptionThrown = true;
+        }
+
+        //Assert
+        assertTrue(exceptionThrown);
+    }
+
+    @Test
     public void Case_Constructor_Should_SetDimentionsAndOrigin(){
         //Arrange
         final float WIDTH = 20.0f;
@@ -138,6 +160,46 @@ public class CaseTests extends TestClass{
         assertEquals(HEIGHT - Config.PLANK_THICKNESS, rightPlank.getHeight(), DELTA);
         assertEquals(WIDTH - 2 * Config.PLANK_THICKNESS, bottomPlank.getWidth(), DELTA);
         assertEquals(Config.PLANK_THICKNESS, bottomPlank.getHeight(), DELTA);
+    }
+    //#endregion
+
+    //#region Setters
+    @Test
+    public void Case_setWidth_Should_ThrowException_If_DirectionIsNotHorizontal(){
+        //Arrange
+        final float WIDTH = 25.0f;
+        final float HEIGHT = 25.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(0, 0);
+        boolean exceptionThrown = false;
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        try{
+            testCase.setWidth(30.0f, Side.TOP);
+        } catch(InvalidParameterException e){
+            exceptionThrown = true;
+        }
+
+        //Assert
+        assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void Case_setWidth_Should_SetWidthToMinimumValue_If_GivenValueIsTooSmall(){
+        //Arrange
+        final float WIDTH = 25.0f;
+        final float HEIGHT = 25.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(0, 0);
+        final float NEW_WIDTH = 30.0f;
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+            testCase.setWidth(NEW_WIDTH, Side.TOP);
+
+        //Assert
+        assertEquals(NEW_WIDTH, testCase.getWidth(), DELTA);
     }
     //#endregion
 }
