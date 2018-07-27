@@ -12,7 +12,7 @@ public class PlankTests extends TestClass{
 
     //#region Getters    
     @Test
-    public void Plank_getWidthShouldReturnPlankWidth(){
+    public void Plank_getWidth_Should_ReturnPlankWidth(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
@@ -59,6 +59,24 @@ public class PlankTests extends TestClass{
 
     //#region Setters
     @Test
+    public void Plank_setWidth_Should_ChangePlankWidthToMinimumValue_If_GivenValueIsTooSmall(){
+        //Arrange
+        final float WIDTH = 30;
+        final float HEIGHT = 40;
+        final float SMALL_WIDTH = Config.MIN_PLANK_THICKNESS - 0.5f;
+
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
+        Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        testPlank.setWidth(SMALL_WIDTH);
+        float result = testPlank.getWidth();
+
+        //Assert
+        assertEquals(Config.MIN_PLANK_THICKNESS, result, DELTA);
+    }
+
+    @Test
     public void Plank_setWidth_Should_ChangePlankWidthValue(){
         //Arrange
         final float WIDTH = 30;
@@ -77,22 +95,23 @@ public class PlankTests extends TestClass{
     }
 
     @Test
-    public void Plank_setWidth_Should_ChangePlankWidthToMinimumValue_If_GivenValueIsTooSmall(){
+    public void Plank_setHeight_Should_ChangePlankHeightToMinimumValue_If_GivenValueIsTooSmall(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final float SMALL_WIDTH = Config.MIN_PLANK_THICKNESS - 0.5f;
+        final float SMALL_HEIGHT = Config.MIN_PLANK_THICKNESS - 0.5f;
 
         final ShelfPoint ORIGIN = new ShelfPoint(40,30);
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
-        testPlank.setWidth(SMALL_WIDTH);
-        float result = testPlank.getWidth();
+        testPlank.setHeight(SMALL_HEIGHT);
+        float result = testPlank.getHeight();
 
         //Assert
         assertEquals(Config.MIN_PLANK_THICKNESS, result, DELTA);
     }
+
     @Test
     public void Plank_setHeight_Should_ChangePlankHeightValue(){
         //Arrange
@@ -112,21 +131,43 @@ public class PlankTests extends TestClass{
     }
 
     @Test
-    public void Plank_setHeight_Should_ChangePlankHeightToMinimumValue_If_GivenValueIsTooSmall(){
+    public void Plank_setOrigin_Should_ThrowException_If_GivenOriginIsNull(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
-        final float SMALL_HEIGHT = Config.MIN_PLANK_THICKNESS - 0.5f;
-
         final ShelfPoint ORIGIN = new ShelfPoint(40,30);
+        
+        Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
+
+        boolean exceptionThrown = false;
+
+        //Action
+        try{
+            testPlank.setOrigin(null);
+        } catch(InvalidParameterException e) {
+            exceptionThrown = true;
+        }
+
+        //Assert
+        assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void Plank_setOrigin_Should_ChangePlankOriginValue(){
+        //Arrange
+        final float WIDTH = 30;
+        final float HEIGHT = 40;
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
+        final ShelfPoint NEW_ORIGIN = new ShelfPoint(20, 10);
+
         Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
 
         //Action
-        testPlank.setHeight(SMALL_HEIGHT);
-        float result = testPlank.getHeight();
+        testPlank.setOrigin(NEW_ORIGIN);
+        ShelfPoint result = testPlank.getOrigin();
 
         //Assert
-        assertEquals(Config.MIN_PLANK_THICKNESS, result, DELTA);
+        assertTrue(result.equals(NEW_ORIGIN));
     }
     //#endregion
 
@@ -149,7 +190,7 @@ public class PlankTests extends TestClass{
     }
 
     @Test
-    public void Plank_Constructor_Should_ThrowException_If_OriginIsNull(){
+    public void Plank_Constructor_Should_ThrowException_If_GivenOriginIsNull(){
         //Arrange
         final float WIDTH = 30;
         final float HEIGHT = 40;
@@ -161,7 +202,6 @@ public class PlankTests extends TestClass{
         try{
             new Plank(WIDTH, HEIGHT, ORIGIN);
         } catch(InvalidParameterException e) {
-        } finally {
             exceptionThrown = true;
         }
 

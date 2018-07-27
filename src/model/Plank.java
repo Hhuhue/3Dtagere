@@ -26,26 +26,36 @@ public class Plank{
     
     /**
      * Redefines the width of the plank.
-     * @param width The new width
+     * @param newWidth The new width of the plank
      */
-    public void setWidth(float width){
-        if(width < Config.MIN_PLANK_THICKNESS){
+    public void setWidth(float newWidth){
+        if(newWidth < Config.MIN_PLANK_THICKNESS){
             this.width = Config.MIN_PLANK_THICKNESS;
         } else {
-            this.width = width;
+            this.width = newWidth;
         }
     }
 
     /**
      * Redefines the height of the plank.
-     * @param height The new height
+     * @param newHeight The new height of the plank
      */
-    public void setHeight(float height){
-        if(height < Config.MIN_PLANK_THICKNESS){
+    public void setHeight(float newHeight){
+        if(newHeight < Config.MIN_PLANK_THICKNESS){
             this.height = Config.MIN_PLANK_THICKNESS;
         } else {
-            this.height = height;
+            this.height = newHeight;
         }
+    }
+
+    /**
+     * Redefines the position of the plank.
+     * @param newOrigin The new position of the plank
+     */
+    public void setOrigin(ShelfPoint newOrigin){
+        if(newOrigin == null) throw new InvalidParameterException("The new origin must not be null");
+        
+        this.origin = newOrigin;
     }
 
     /**
