@@ -173,23 +173,6 @@ public class PlankTests extends TestClass{
 
     //#region Constructors
     @Test
-    public void Plank_Constructor_Should_SetDimentionsAndOrigin(){
-        //Arrange
-        final float WIDTH = 30;
-        final float HEIGHT = 40;
-        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
-
-        //Action
-        Plank result = new Plank(WIDTH, HEIGHT, ORIGIN);
-        ShelfPoint resultOrigin = result.getOrigin();
-
-        //Assert
-        assertEquals(WIDTH, result.getWidth(), DELTA);
-        assertEquals(HEIGHT, result.getHeight(), DELTA);
-        assertTrue(resultOrigin.equals(ORIGIN));
-    }
-
-    @Test
     public void Plank_Constructor_Should_ThrowException_If_GivenOriginIsNull(){
         //Arrange
         final float WIDTH = 30;
@@ -222,6 +205,57 @@ public class PlankTests extends TestClass{
         //Assert
         assertEquals(Config.MIN_PLANK_THICKNESS, DELTA, result.getWidth());
         assertEquals(Config.MIN_PLANK_THICKNESS, result.getHeight(), DELTA);
+    }
+
+    @Test
+    public void Plank_Constructor_Should_SetDimentionsAndOrigin(){
+        //Arrange
+        final float WIDTH = 30;
+        final float HEIGHT = 40;
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
+
+        //Action
+        Plank result = new Plank(WIDTH, HEIGHT, ORIGIN);
+        ShelfPoint resultOrigin = result.getOrigin();
+
+        //Assert
+        assertEquals(WIDTH, result.getWidth(), DELTA);
+        assertEquals(HEIGHT, result.getHeight(), DELTA);
+        assertTrue(resultOrigin.equals(ORIGIN));
+    }
+    
+    @Test
+    public void Plank_CopyConstructor_Should_ThrowException_If_PlankToCopyIsNull(){
+        //Arrange
+        boolean exceptionThrown = false;
+
+        //Action
+        try{
+            new Plank(null);
+        } catch (InvalidParameterException e){
+            exceptionThrown = true;
+        }
+
+        //Assert
+        assertTrue(exceptionThrown);
+    }
+    
+    @Test
+    public void Plank_CopyConstructor_Should_CopyGivenPlankDimentionsAndOrigin(){
+        //Arrange
+        final float WIDTH = 30;
+        final float HEIGHT = 40;
+        final ShelfPoint ORIGIN = new ShelfPoint(40,30);
+        Plank testPlank = new Plank(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        Plank result = new Plank(testPlank);
+        ShelfPoint resultOrigin = result.getOrigin();
+
+        //Assert
+        assertEquals(testPlank.getWidth(), result.getWidth(), DELTA);
+        assertEquals(testPlank.getHeight(), result.getHeight(), DELTA);
+        assertTrue(resultOrigin.equals(testPlank.getOrigin()));
     }
     //#endregion
 }

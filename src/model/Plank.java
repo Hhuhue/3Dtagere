@@ -18,10 +18,24 @@ public class Plank{
      * @throws InvalidParameterException Thrown if the given origin is null
      */
     public Plank(float width, float height, ShelfPoint origin){
-        if(origin == null) throw new InvalidParameterException("Origin must not be null");        
+        if(origin == null) throw new InvalidParameterException("Origin must not be null");
+
         this.origin = origin;
         setWidth(width);
         setHeight(height);
+    }
+
+    /**
+     * Creates a copy of the given Plank.
+     * @param plank The plank to copy
+     * @throws InvalidParameterException Thrown if the given Plank is null
+     */
+    public Plank(Plank plank){
+        if(plank == null) throw new InvalidParameterException("Plank must not be null");
+
+        this.origin = plank.origin;
+        setWidth(plank.width);
+        setHeight(plank.height);
     }
     
     /**
