@@ -31,9 +31,9 @@ public class Plank{
      * @throws InvalidParameterException Thrown if the given Plank is null
      */
     public Plank(Plank plank){
-        if(plank == null) throw new InvalidParameterException("Plank must not be null");
+        if(plank == null) throw new InvalidParameterException("Plank to copy must not be null");
 
-        this.origin = plank.origin;
+        this.origin = new ShelfPoint(plank.origin);
         setWidth(plank.width);
         setHeight(plank.height);
     }

@@ -1,6 +1,8 @@
 package test.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.security.InvalidParameterException;
@@ -81,12 +83,18 @@ public class CaseTests extends TestClass{
         Plank leftPlank = testCase.getPlank(Side.LEFT);
         Plank rightPlank = testCase.getPlank(Side.RIGHT);
         Plank bottomPlank = testCase.getPlank(Side.BOTTOM);
+        Plank secondLeftPlank = testCase.getPlank(Side.SECOND_LEFT);
+        Plank secondRightPlank = testCase.getPlank(Side.SECOND_RIGHT);
+        Plank secondBottomPlank = testCase.getPlank(Side.SECOND_BOTTOM);
         
         //Assert
         assertTrue(expectedTopOrigin.equals(topPlank.getOrigin()));
         assertTrue(expectedLeftOrigin.equals(leftPlank.getOrigin()));
         assertTrue(expectedRightOrigin.equals(rightPlank.getOrigin()));
         assertTrue(expectedBottomOrigin.equals(bottomPlank.getOrigin()));
+        assertEquals(null, secondLeftPlank);
+        assertEquals(null, secondRightPlank);
+        assertEquals(null, secondBottomPlank);
     }
     //#endregion
 
@@ -200,6 +208,109 @@ public class CaseTests extends TestClass{
 
         //Assert
         assertEquals(NEW_WIDTH, testCase.getWidth(), DELTA);
+    }
+    //#endregion
+
+    //#region tooglePlank
+    @Test
+    public void Case_toggleSecondPlank_Should_ThrowException_If_GivenSideIsTop(){
+        //Arrange
+        final float WIDTH = 20.0f;
+        final float HEIGHT = 30.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+        boolean exceptionThrown = false;
+
+        //Action
+        try{
+            testCase.toggleSecondPlank(Side.TOP, true);
+        } catch(InvalidParameterException e){
+            exceptionThrown = true;
+        }
+
+        //Assert
+        assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void Case_toggleSecondPlank_Should_CreateSecondaryPlankAtLeftSide_If_LeftSideGetsEnabled(){
+        //Arrange
+        final float WIDTH = 20.0f;
+        final float HEIGHT = 30.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        testCase.toggleSecondPlank(Side.LEFT, true);
+
+        Plank leftPlank = testCase.getPlank(Side.LEFT);
+        Plank secondLeftPlank = testCase.getPlank(Side.SECOND_LEFT);
+
+        //Assert
+        assertNotNull(secondLeftPlank);
+        
+        ShelfPoint expectedOrigin = ShelfPoint.sum(leftPlank.getOrigin(), Config.PLANK_THICKNESS / -2, 0);
+        ShelfPoint obtainedOrigin = secondLeftPlank.getOrigin();
+
+        assertEquals(leftPlank.getHeight(), secondLeftPlank.getHeight(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, leftPlank.getWidth(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, secondLeftPlank.getWidth(), DELTA);
+        assertTrue(expectedOrigin.equals(obtainedOrigin));
+    }
+
+    @Test
+    public void Case_toggleSecondPlank_Should_CreateSecondaryPlankAtRightSide_If_RightSideGetsEnabled(){
+        //Arrange
+        final float WIDTH = 20.0f;
+        final float HEIGHT = 30.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        testCase.toggleSecondPlank(Side.RIGHT, true);
+        Plank rightPlank = testCase.getPlank(Side.RIGHT);
+        Plank secondRightPlank = testCase.getPlank(Side.SECOND_RIGHT);
+
+        //Assert
+        assertNotNull(secondRightPlank);
+        
+        ShelfPoint expectedOrigin = ShelfPoint.sum(rightPlank.getOrigin(), Config.PLANK_THICKNESS / 2, 0);
+        ShelfPoint obtainedOrigin = secondRightPlank.getOrigin();
+
+        assertEquals(rightPlank.getHeight(), secondRightPlank.getHeight(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, rightPlank.getWidth(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, secondRightPlank.getWidth(), DELTA);
+        assertTrue(expectedOrigin.equals(obtainedOrigin));
+    }
+
+    @Test
+    public void Case_toggleSecondPlank_Should_CreateSecondaryPlankAtBottomSide_If_BottomSideGetsEnabled(){
+        //Arrange
+        final float WIDTH = 20.0f;
+        final float HEIGHT = 30.0f;
+        final ShelfPoint ORIGIN = new ShelfPoint(10, 15);
+
+        Case testCase = new Case(WIDTH, HEIGHT, ORIGIN);
+
+        //Action
+        testCase.toggleSecondPlank(Side.BOTTOM, true);
+
+        Plank bottomPlank = testCase.getPlank(Side.BOTTOM);
+        Plank secondBottomPlank = testCase.getPlank(Side.SECOND_BOTTOM);
+
+        //Assert
+        assertNotNull(secondBottomPlank);
+        
+        ShelfPoint expectedOrigin = ShelfPoint.sum(bottomPlank.getOrigin(), 0, Config.PLANK_THICKNESS / 2);
+        ShelfPoint obtainedOrigin = secondBottomPlank.getOrigin();
+
+        assertEquals(bottomPlank.getWidth(), secondBottomPlank.getWidth(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, bottomPlank.getHeight(), DELTA);
+        assertEquals(Config.PLANK_THICKNESS / 2, secondBottomPlank.getHeight(), DELTA);
+        assertTrue(expectedOrigin.equals(obtainedOrigin));
     }
     //#endregion
 }
